@@ -4,7 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "postinstall": "npx playwright install",
+    "start": "node server.js",
+    "postinstall": "npx playwright install --with-deps",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
