@@ -1,0 +1,14 @@
+# render.yaml - Autodeploy your evaluator to Render using Docker
+services:
+  - type: web
+    name: visual-evaluator
+    env: docker
+    plan: free
+    region: oregon
+    branch: main
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+    autoDeploy: true
