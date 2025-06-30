@@ -1,20 +1,21 @@
-# Dockerfile - For deploying evaluator with Playwright + Node.js on Render
-
-# 1. Use the official Node.js image with Debian for Playwright
+# ✅ Use the official Playwright base image with all dependencies
 FROM mcr.microsoft.com/playwright:v1.44.0-jammy
 
-# 2. Set working directory
+# 📁 Set working directory
 WORKDIR /app
 
-# 3. Copy package files and install dependencies
+# 📦 Copy package.json and install Node.js dependencies
 COPY package.json package-lock.json* ./
 RUN npm install
 
-# 4. Copy rest of your project
+# 📂 Copy the rest of your app code
 COPY . .
 
-# 5. Expose port (same as your server.js uses)
+# 📥 Install required browsers (Chromium, Firefox, WebKit)
+RUN npx playwright install --with-deps
+
+# 🌐 Expose the same port your app uses
 EXPOSE 3000
 
-# 6. Start the server
+# 🚀 Start your app
 CMD ["node", "server.js"]
