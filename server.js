@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 // Serve static files (like screenshots or cloned repos if needed)
 app.use('/static', express.static(path.join(__dirname, 'public')));
@@ -47,6 +47,9 @@ app.post('/evaluate', async (req, res) => {
     const results = await evaluateStudentsWithVision({ repoUrl, rubricText: rubric, expectedUrl });
     res.json({ success: true, results });
   } catch (err) {
+    if (err.type === "entity.too.large") {
+    return res.status(413).json({ error: "Request body too large" });
+  }
     console.error('❌ Evaluation failed:', err);
     res.status(500).json({ error: 'Evaluation failed', details: err.message });
   }
