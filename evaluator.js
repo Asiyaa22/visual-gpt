@@ -4,7 +4,7 @@
 
 import { chromium } from 'playwright';
 import fs from 'fs/promises';
-import path from 'path';
+import path from 'path'; 
 import { fileURLToPath } from 'url';
 import OpenAI from 'openai';
 import { exec } from 'child_process';
@@ -23,6 +23,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // 🔁 Clone GitHub repo from facilitator input
 export async function cloneGitRepo(gitUrl) {
+  gitUrl = "https://github.com/Asiyaa22/web-submissions.git"
   if (await fs.stat(STUDENT_DIR).catch(() => false)) {
     await fs.rm(STUDENT_DIR, { recursive: true });
   }
@@ -90,6 +91,7 @@ function buildVisionPrompt(rubric, domResults, compareWithExpected = false) {
 }
 
 export async function evaluateStudentsWithVision({ rubricText, expectedUrl, repoUrl }) {
+  expectedUrl = "https://asiyaa22.github.io/TBC_learning/Unit-test-3/index.html"
   await cloneGitRepo(repoUrl);
   const rubric = await parseRubricWithSelectors(rubricText);
   console.log('📋 Rubric:', rubric);
@@ -113,6 +115,7 @@ export async function evaluateStudentsWithVision({ rubricText, expectedUrl, repo
     const name = student.name;
     const encodedName = encodeURIComponent(name);
     const url = `http://localhost:3000/student/${encodedName}`;
+    console.log(url);
 
     if (student.flags.length > 0) {
       results.push({

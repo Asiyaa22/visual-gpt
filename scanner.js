@@ -38,6 +38,9 @@ export const scanStudentFolders = async () => {
     let results = [];
 
     for (const student of students) {
+
+    // Skip hidden/system folders like .git, .DS_Store
+    if (student.startsWith('.')) continue;
     const studentPath = path.join(student_root, student);
     const stat = await fs.stat(studentPath);
 
