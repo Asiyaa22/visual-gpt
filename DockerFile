@@ -11,8 +11,8 @@ RUN npm install
 # 📂 Copy the rest of your app code
 COPY . .
 
-# 📥 Install required browsers (Chromium, Firefox, WebKit)
-RUN npx playwright install --with-deps
+# 📥 Install required browsers inside the image (Chromium only, faster)
+RUN npx playwright install --with-deps chromium
 
 # 🌐 Expose the same port your app uses
 EXPOSE 3000
