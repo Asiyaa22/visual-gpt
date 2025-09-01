@@ -45,7 +45,6 @@ app.post('/evaluate', async (req, res) => {
 
   try {
     const results = await evaluateStudentsWithVision({ repoUrl, rubricText: rubric, expectedUrl });
-    await mountStudentFolders(); // Ensure static mounting post-evaluation
     res.json({ success: true, results });
   } catch (err) {
     console.error('❌ Evaluation failed:', err);
